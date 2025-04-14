@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react'
 import Sidebar from './sidebar'
 import { Route, Routes } from 'react-router-dom'
 import TodoApp from './todo'
@@ -8,15 +9,17 @@ import Header from './header'
 import '../styles/dashboard.css'
 
 function Dashboard() {
+  const [sidebarOpen, setSidebarOpen] = useState(true)
+
+
   return (
     <>
       <div className='header'>
-        <Header />
+        <Header toggleSidebar={() => setSidebarOpen(prev => !prev)} />
       </div>
       <div className="dashboard">
-        <Sidebar />
+        <Sidebar isOpen={sidebarOpen}/>
         <div className="content">
-          <h1>Ciao</h1>
           <Routes>
             <Route path="/tasks" element={<TodoApp />} />
             <Route path="/journal" element={<JournalApp />} />

@@ -1,13 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import '../styles/sidebar.css'
 
-function Sidebar() {
+function Sidebar({isOpen}) {
   return (
-    <div className='sidebar'>
-      <h2>personalSpace</h2>
-      <h2>Journal</h2>
-      <h2>TODO</h2>
-      <h2>Calendar</h2>
+    <div className={`sidebar ${!isOpen ? 'hidden' : ''}`}>
+      <button><Link to="/tasks">Tasks</Link></button>
+      <button><Link to="/journal">Journal</Link></button>
+      <button><Link to="/journal">Calendar</Link></button>
     </div>
   )
 }

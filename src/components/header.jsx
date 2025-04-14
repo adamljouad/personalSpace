@@ -1,10 +1,11 @@
 import React from 'react'
 import '../styles/dashboard.css'
 
-function Header() {
+function Header({toggleSidebar}) {
   return (
     <div className="header">
-      <h1>Personal Space</h1>
+      <button onClick={toggleSidebar} >☰</button>
+      <h1>FocusFlow</h1>
     </div>
   )
 }
