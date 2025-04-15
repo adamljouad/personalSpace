@@ -16,6 +16,20 @@ function TodoApp() {
     Sunday: [],
   });
 
+  const [minDate, setMinDate] = useState('');
+  const [maxDate, setMaxDate] = useState('');
+
+  useEffect(() => {
+    const today = new Date();
+    const nextWeek = new Date();
+    nextWeek.setDate(today.getDate() + 6);
+
+    const formatDate = (date) => date.toISOString().split('T')[0];
+
+    setMinDate(formatDate(today));
+    setMaxDate(formatDate(nextWeek));
+  }, []);
+
   const getDay = (dateString) => {
     const dateObj = new Date(dateString);
     return dateObj.toLocaleDateString('en-US', { weekday: 'long' });
@@ -60,7 +74,8 @@ function TodoApp() {
       <h4>Name</h4>
       <input type='text' value={inputName} onChange={(e) => setInputName(e.target.value)}></input>
       <h4>Date</h4>
-      <input type='date' value={inputDate} onChange={(e) => setInputDate(e.target.value)}></input>
+      <input type='date' value={inputDate} onChange={(e) => setInputDate(e.target.value)}
+      min={minDate} max={maxDate}></input>
       <button onClick={addTasks}>Add Task</button>
       <div className='todo-days'>
       <div className='todo-list'>
@@ -68,7 +83,11 @@ function TodoApp() {
         {todayDate() === 'Monday' && <span>Due Today</span>}
         {tasksByDay.Monday.map((task, index) => (
           <div key={index} className='task-item'>
-            {task.name} - {task.date}
+            {task.name}
+            <div className='task-date'>
+              {task.date}
+            </div>
+            <button className='finished-button'>Finished</button>
           </div>
         ))}
       </div>
@@ -77,7 +96,11 @@ function TodoApp() {
         {todayDate() === 'Tuesday' && <span className='due-today'>Due Today</span>}
         {tasksByDay.Tuesday.map((task, index) => (
           <div key={index} className='task-item'>
-            {task.name} - {task.date}
+            {task.name}
+            <div className='task-date'>
+              {task.date}
+            </div>
+            <button className='finished-button'>Finished</button>
           </div>
         ))}
       </div>
@@ -86,7 +109,10 @@ function TodoApp() {
         {todayDate() === 'Wednesday' && <span className='due-today'>Due Today</span>}
         {tasksByDay.Wednesday.map((task, index) => (
           <div key={index} className='task-item'>
-            {task.name} - {task.date}
+            {task.name}
+            <div className='task-date'>
+              {task.date}
+            </div>
           </div>
         ))}
       </div>
@@ -95,7 +121,11 @@ function TodoApp() {
         {todayDate() === 'Thursday' && <span className='due-today'>Due Today</span>}
         {tasksByDay.Thursday.map((task, index) => (
           <div key={index} className='task-item'>
-            {task.name} - {task.date}
+            {task.name}
+            <div className='task-date'>
+              {task.date}
+            </div>
+            <button className='finished-button'>Finished</button>
           </div>
         ))}
       </div>
@@ -104,7 +134,11 @@ function TodoApp() {
         {todayDate() === 'Friday' && <span className='due-today'>Due Today</span>}
         {tasksByDay.Friday.map((task, index) => (
           <div key={index} className='task-item'>
-            {task.name} - {task.date}
+            {task.name}
+            <div className='task-date'>
+              {task.date}
+            </div>
+            <button className='finished-button'>Finished</button>
           </div>
         ))}
       </div>
@@ -113,7 +147,11 @@ function TodoApp() {
         {todayDate() === 'Saturday' && <span className='due-today'>Due Today</span>}
         {tasksByDay.Saturday.map((task, index) => (
           <div key={index} className='task-item'>
-            {task.name} - {task.date}
+            {task.name}
+            <div className='task-date'>
+              {task.date}
+            </div>
+            <button className='finished-button'>Finished</button>
           </div>
         ))}
       </div>
@@ -122,7 +160,11 @@ function TodoApp() {
         {todayDate() === 'Sunday' && <span className='due-today'>Due Today</span>}
         {tasksByDay.Sunday.map((task, index) => (
           <div key={index} className='task-item'>
-            {task.name} - {task.date}
+            {task.name}
+            <div className='task-date'>
+              {task.date}
+            </div>
+            <button className='finished-button'>Finished</button>
           </div>
         ))}
       </div>
