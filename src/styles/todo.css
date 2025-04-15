@@ -1,0 +1,14 @@
+.todo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: black;
+}
+
+.todo-list {
+  padding: 20px;
+  background-color: lightgray;
+  border-radius: 10px;
+  margin-top: 20px;
+}
