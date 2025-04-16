@@ -51,7 +51,6 @@ function TodoApp() {
       Sunday: tasks.filter((task) => getDay(task.date) === 'Sunday'),
     };
     setTasksByDay(updatedTasksByDay);
-    console.log(todayDate())
   }, [tasks]);
 
   
@@ -61,10 +60,15 @@ function TodoApp() {
       alert('Riempi i campi obbligatori')
     } else {
       setTasks((prev) => [...prev, {
+        id: Date.now(),
         name: inputName,
         date: inputDate
       }])
     }
+  }
+
+  const removeTask = (taskId) => {
+    setTasks(tasks.filter((task) => task.id !== taskId));
   }
 
 
@@ -87,7 +91,7 @@ function TodoApp() {
             <div className='task-date'>
               {task.date}
             </div>
-            <button className='finished-button'>Finished</button>
+            <button className='finished-button' onClick={() => removeTask(task.id)}>Finished</button>
           </div>
         ))}
       </div>
@@ -100,7 +104,7 @@ function TodoApp() {
             <div className='task-date'>
               {task.date}
             </div>
-            <button className='finished-button'>Finished</button>
+            <button className='finished-button' onClick={() => removeTask(task.id)}>Finished</button>
           </div>
         ))}
       </div>
@@ -113,6 +117,7 @@ function TodoApp() {
             <div className='task-date'>
               {task.date}
             </div>
+            <button className='finished-button' onClick={() => removeTask(task.id)}>Finished</button>
           </div>
         ))}
       </div>
@@ -125,7 +130,7 @@ function TodoApp() {
             <div className='task-date'>
               {task.date}
             </div>
-            <button className='finished-button'>Finished</button>
+            <button className='finished-button' onClick={() => removeTask(task.id)}>Finished</button>
           </div>
         ))}
       </div>
@@ -138,7 +143,7 @@ function TodoApp() {
             <div className='task-date'>
               {task.date}
             </div>
-            <button className='finished-button'>Finished</button>
+            <button className='finished-button' onClick={() => removeTask(task.id)}>Finished</button>
           </div>
         ))}
       </div>
@@ -151,7 +156,7 @@ function TodoApp() {
             <div className='task-date'>
               {task.date}
             </div>
-            <button className='finished-button'>Finished</button>
+            <button className='finished-button' onClick={() => removeTask(task.id)}>Finished</button>
           </div>
         ))}
       </div>
@@ -164,7 +169,7 @@ function TodoApp() {
             <div className='task-date'>
               {task.date}
             </div>
-            <button className='finished-button'>Finished</button>
+            <button className='finished-button' onClick={() => removeTask(task.id)}>Finished</button>
           </div>
         ))}
       </div>
