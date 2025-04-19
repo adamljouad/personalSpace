@@ -80,18 +80,21 @@ function TodoApp() {
 
       <div className='button-container'>
         {days.map((day) => (
-          <button
-            key={day}
-            className='day-button'
-            onClick={() => setActiveDay((prev) => (prev === day ? null : day))}
-          >
-            {day}
-          </button>
+          <div key={day} style={{position: 'relative'}} className='button-for-badge'>
+            {today === day && <div className='due-badge'>Due Today</div>}
+            <button
+              className='day-button'
+              onClick={() => setActiveDay((prev) => (prev === day ? null : day))}
+            >
+              {day}
+            </button>
+          </div>
         ))}
       </div>
 
       <div className={`task-box ${activeDay ? 'task-box-open' : ''}`}>
         {activeDay && (
+          <>
           <div className='todo-list fade-in'>
             <h4>{activeDay}</h4>
             {today === activeDay && <span className='due-today'>Due Today</span>}
@@ -103,6 +106,7 @@ function TodoApp() {
               </div>
             ))}
           </div>
+          </>
         )}
       </div>
     </div>
