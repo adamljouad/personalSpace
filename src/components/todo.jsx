@@ -31,17 +31,13 @@ function TodoApp() {
   };
 
   useEffect(() => {
-    const updatedTasksByDay = {
-      Monday: tasks.filter((task) => getDay(task.date) === 'Monday'),
-      Tuesday: tasks.filter((task) => getDay(task.date) === 'Tuesday'),
-      Wednesday: tasks.filter((task) => getDay(task.date) === 'Wednesday'),
-      Thursday: tasks.filter((task) => getDay(task.date) === 'Thursday'),
-      Friday: tasks.filter((task) => getDay(task.date) === 'Friday'),
-      Saturday: tasks.filter((task) => getDay(task.date) === 'Saturday'),
-      Sunday: tasks.filter((task) => getDay(task.date) === 'Sunday'),
-    };
-    setTasksByDay(updatedTasksByDay);
-    console.log(todayDate())
+    const grouped = tasks.reduce((acc, task) => {
+      const day = getDay(task.date);
+      if (!acc[day]) acc[day] = [];
+      acc[day].push(task);
+      return acc;
+    }, {});
+    setTasksByDay(grouped);
   }, [tasks]);
 
   const addTask = () => {
@@ -73,100 +69,45 @@ function TodoApp() {
         onChange={(e) => setInputName(e.target.value)}
       />
       <h4>Date</h4>
-      <input type='date' value={inputDate} onChange={(e) => setInputDate(e.target.value)}
-      min={minDate} max={maxDate}></input>
-      <button onClick={addTasks}>Add Task</button>
-      <div className='todo-days'>
-      <div className='todo-list'>
-        <h4>Monday</h4>
-        {todayDate() === 'Monday' && <span>Due Today</span>}
-        {tasksByDay.Monday.map((task, index) => (
-          <div key={index} className='task-item'>
-            {task.name}
-            <div className='task-date'>
-              {task.date}
-            </div>
-            <button className='finished-button'>Finished</button>
+      <input
+        type='date'
+        value={inputDate}
+        onChange={(e) => setInputDate(e.target.value)}
+        min={minDate}
+        max={maxDate}
+      />
+      <button onClick={addTask}>Add Task</button>
+
+      <div className='button-container'>
+        {days.map((day) => (
+          <div key={day} style={{position: 'relative'}} className='button-for-badge'>
+            {today === day && <div className='due-badge'>Due Today</div>}
+            <button
+              className='day-button'
+              onClick={() => setActiveDay((prev) => (prev === day ? null : day))}
+            >
+              {day}
+            </button>
           </div>
         ))}
       </div>
-      <div className='todo-list'>
-        <h4 className='day-title'>Tuesday</h4>
-        {todayDate() === 'Tuesday' && <span className='due-today'>Due Today</span>}
-        {tasksByDay.Tuesday.map((task, index) => (
-          <div key={index} className='task-item'>
-            {task.name}
-            <div className='task-date'>
-              {task.date}
-            </div>
-            <button className='finished-button'>Finished</button>
+
+      <div className={`task-box ${activeDay ? 'task-box-open' : ''}`}>
+        {activeDay && (
+          <>
+          <div className='todo-list fade-in'>
+            <h4>{activeDay}</h4>
+            {today === activeDay && <span className='due-today'>Due Today</span>}
+            {(tasksByDay[activeDay] || []).map((task) => (
+              <div key={task.id} className='task-item'>
+                {task.name}
+                <div className='task-date'>{task.date}</div>
+                <button className='finished-button' onClick={() => removeTask(task.id)}>Finished</button>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className='todo-list'>
-        <h4 className='day-title'>Wednesday</h4>
-        {todayDate() === 'Wednesday' && <span className='due-today'>Due Today</span>}
-        {tasksByDay.Wednesday.map((task, index) => (
-          <div key={index} className='task-item'>
-            {task.name}
-            <div className='task-date'>
-              {task.date}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className='todo-list'>
-        <h4 className='day-title'>Thursday</h4>
-        {todayDate() === 'Thursday' && <span className='due-today'>Due Today</span>}
-        {tasksByDay.Thursday.map((task, index) => (
-          <div key={index} className='task-item'>
-            {task.name}
-            <div className='task-date'>
-              {task.date}
-            </div>
-            <button className='finished-button'>Finished</button>
-          </div>
-        ))}
-      </div>
-      <div className='todo-list'>
-        <h4 className='day-title'>Friday</h4>
-        {todayDate() === 'Friday' && <span className='due-today'>Due Today</span>}
-        {tasksByDay.Friday.map((task, index) => (
-          <div key={index} className='task-item'>
-            {task.name}
-            <div className='task-date'>
-              {task.date}
-            </div>
-            <button className='finished-button'>Finished</button>
-          </div>
-        ))}
-      </div>
-      <div className='todo-list'>
-        <h4 className='day-title'>Saturday</h4>
-        {todayDate() === 'Saturday' && <span className='due-today'>Due Today</span>}
-        {tasksByDay.Saturday.map((task, index) => (
-          <div key={index} className='task-item'>
-            {task.name}
-            <div className='task-date'>
-              {task.date}
-            </div>
-            <button className='finished-button'>Finished</button>
-          </div>
-        ))}
-      </div>
-      <div className='todo-list'>
-        <h4 className='day-title'>Sunday</h4>
-        {todayDate() === 'Sunday' && <span className='due-today'>Due Today</span>}
-        {tasksByDay.Sunday.map((task, index) => (
-          <div key={index} className='task-item'>
-            {task.name}
-            <div className='task-date'>
-              {task.date}
-            </div>
-            <button className='finished-button'>Finished</button>
-          </div>
-        ))}
-      </div>
+          </>
+        )}
       </div>
     </div>
   );

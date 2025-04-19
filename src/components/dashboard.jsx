@@ -15,11 +15,11 @@ function Dashboard() {
   return (
     <>
       <div className='header'>
-        <Header toggleSidebar={() => setSidebarOpen(prev => !prev)} />
       </div>
       <div className="dashboard">
         <Sidebar isOpen={sidebarOpen}/>
         <div className="content">
+          <Header toggleSidebar={() => setSidebarOpen(prev => !prev)} />
           <Routes>
             <Route path="/tasks" element={<TodoApp />} />
             <Route path="/journal" element={<JournalApp />} />
